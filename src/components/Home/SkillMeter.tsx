@@ -1,10 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
-const SkillMeter: React.FC = () => {
+interface skillData {
+  skillName: string
+  percentage: number
+}
+
+const SkillMeter: React.FC<skillData> = (props) => {
+  debugger
   const chartRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    debugger
     if (chartRef.current) {
       const chart = echarts.init(chartRef.current);
 
@@ -17,7 +24,7 @@ const SkillMeter: React.FC = () => {
             name: 'Access From',
             type: 'pie',
             radius: ['50%', '60%'],
-            avoidLabelOverlap: false,
+            avoidLabelOverlap: true,
             label: {
               show: true,
               position: 'center',
@@ -29,10 +36,10 @@ const SkillMeter: React.FC = () => {
                 fontWeight: 'bold',
               },
             },
-            labelLine: {
-              show: false,
-            },
-            data: [{ value: 100, name: 'Python - 95%' }, { value: 5 }],
+            // labelLine: {
+            //   show: false,
+            // },
+            data: [{ value: props.percentage, name: props.skillName, selected: true }, { value: 100 - props.percentage,  selected: false}],
           },
         ],
       };

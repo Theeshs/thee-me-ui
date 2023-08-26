@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import meter1 from '../../assets/img/meter1.svg';
 import meter2 from '../../assets/img/meter2.svg';
 import meter3 from '../../assets/img/meter3.svg';
@@ -6,8 +6,19 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import colorSharp from '../../assets/img/color-sharp.png';
 import SkillMeter from './SkillMeter';
+import { useSelector } from 'react-redux';
+// import RootState from '../..store';
 
 const Skills: FC = () => {
+  const { skills } = useSelector(
+    (state: RootState) => state.me.data
+  );
+  
+
+  useEffect(() => {
+    debugger
+  },[])
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -36,18 +47,25 @@ const Skills: FC = () => {
             <div className='skill-bx wow zoomIn'>
               <h2>Skills</h2>
               <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.<br></br> Lorem Ipsum has been the industry's standard
-                dummy text.
+              Empowering Possibilities through Technical Proficiency.
               </p>
               <Carousel
                 responsive={responsive}
                 infinite={true}
                 className='owl-carousel owl-theme skill-slider'
               >
-                <div className='item'>
-                  <SkillMeter />
-                </div>
+
+                {
+                  // skills & skills.map(skill => (
+                  
+                  // ))
+                  skills ? skills.map(skill => (
+                    <div className='item' id={skill.name}>
+                      <SkillMeter skillName={skill.name} percentage={skill.percentage} />
+                      <p>{skill.name}</p>
+                    </div>
+                  )) : <p>hello</p>
+                }
               </Carousel>
             </div>
           </div>
